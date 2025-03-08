@@ -1,0 +1,16 @@
+@import url("./styles/_reset.css");
+@import url("./styles/_variables.css");
+
+/* fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+/* default configuration */
+* {
+	font-family: var(--primary-font);
+	font-weight: 500;
+	color: var(--color-zinc-300);
+}
+
+body {
+	background-color: var(--color-zinc-900);
+}
