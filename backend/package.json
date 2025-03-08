@@ -1,19 +1,20 @@
 {
-  "name": "nova-pasta",
+  "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch ./src/index.js",
-    "initdatabase": "initdatabase.bat",
-    "seeddatabase": "initdatabase_seeded.bat",
-    "initall": "npm run initdatabase && node --watch ./src/index.js",
-    "initall_seed": "npm run initdatabase && npm run seeddatabase && node --watch ./src/index.js"
+    "start": "node --watch src/index.js",
+    
+    "db:init": "scripts\\initdatabase.bat",
+    "db:seed": "scripts\\initdatabase_seeded.bat",
+    "db:reset": "npm run db:init && npm run db:seed",
+    
+    "dev": "npm run db:init && node --watch src/index.js",
+    "dev:seed": "npm run db:reset && node --watch src/index.js",
+
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.1",

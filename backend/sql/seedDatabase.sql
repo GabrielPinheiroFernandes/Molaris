@@ -15,6 +15,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Copiando dados para a tabela consultorio.consulta: ~5 rows (aproximadamente)
+USE `consultorio`;
 DELETE FROM `consulta`;
 INSERT INTO `consulta` (`COD`, `DATA_CONSULTA`, `HORA_CONULTA`, `STATUS`, `OBSERVACAO_MEDICA`, `Paciente_CODIGO`, `doutor_CODIGO`) VALUES
 	(78, '2025-03-07', '20:11:10', 'PD', NULL, 69, 76),
