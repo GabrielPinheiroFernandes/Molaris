@@ -32,11 +32,9 @@ CREATE TABLE IF NOT EXISTS `consulta` (
   `doutor_CODIGO` int(11) NOT NULL,
   PRIMARY KEY (`COD`,`Paciente_CODIGO`,`doutor_CODIGO`) USING BTREE,
   KEY `fk_consulta_doutor1_idx` (`doutor_CODIGO`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela consultorio.consulta: ~1 rows (aproximadamente)
-INSERT INTO `consulta` (`COD`, `DATA_CONSULTA`, `HORA_CONULTA`, `STATUS`, `OBSERVACAO_MEDICA`, `Paciente_CODIGO`, `doutor_CODIGO`) VALUES
-	(78, '2025-03-07', '20:11:10', 'PD', NULL, 69, 76);
+-- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela consultorio.doutor
 DROP TABLE IF EXISTS `doutor`;
@@ -50,11 +48,9 @@ CREATE TABLE IF NOT EXISTS `doutor` (
   `OBSERVACAO` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`CODIGO`) USING BTREE,
   UNIQUE KEY `ID_USER` (`ID_USER`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela consultorio.doutor: ~1 rows (aproximadamente)
-INSERT INTO `doutor` (`CODIGO`, `ID_USER`, `NOME`, `CRM`, `HORA_ENTRADA`, `HORA_SAIDA`, `OBSERVACAO`) VALUES
-	(76, 1, 'dr.Junior fernandes', '123456/SP', '08:00:00', '20:00:00', NULL);
+-- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela consultorio.paciente
 DROP TABLE IF EXISTS `paciente`;
@@ -68,13 +64,9 @@ CREATE TABLE IF NOT EXISTS `paciente` (
   `OBSERVACAO` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`CODIGO`),
   UNIQUE KEY `ID_USER` (`ID_USER`)
-) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela consultorio.paciente: ~2 rows (aproximadamente)
-INSERT INTO `paciente` (`CODIGO`, `ID_USER`, `NOME`, `DATA_NASCIMENTO`, `SEXO`, `PLANO_SAUDE`, `OBSERVACAO`) VALUES
-	(69, 2, 'benedito costa junior bnarros', '2005-03-07', 'M', 'S', NULL),
-	(70, 3, 'Robert Romario', '1990-05-10', 'M', 'A', 'Cliente com histórico de hipertensão.'),
-	(81, 4, 'João Silva', '1990-05-10', 'M', 'A', 'Cliente com histórico de hipertensão.');
+-- Exportação de dados foi desmarcado.
 
 -- Copiando estrutura para tabela consultorio.user
 DROP TABLE IF EXISTS `user`;
@@ -85,15 +77,9 @@ CREATE TABLE IF NOT EXISTS `user` (
   `TOKEN` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE,
   UNIQUE KEY `EMAIL` (`EMAIL`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
--- Copiando dados para a tabela consultorio.user: ~5 rows (aproximadamente)
-INSERT INTO `user` (`ID`, `EMAIL`, `PASSWORD`, `TOKEN`) VALUES
-	(1, 'doctor@hotmail.com', '123', NULL),
-	(2, 'paciente@hotmail.com', '123', NULL),
-	(3, 'paciente2@hotmail.com', '123', NULL),
-	(4, 'pateta@hotmail.com', '123', NULL),
-	(8, 'pateta2@hotmail.com', '123', NULL);
+-- Exportação de dados foi desmarcado.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

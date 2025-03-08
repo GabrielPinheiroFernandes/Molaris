@@ -27,24 +27,50 @@ async function getIdDoctor(id) {
   }
 }
 
-async function addDoctor(NOME, CRO, HORA_ENTRADA, HORA_SAIDA, OBSERVACAO) {
+async function addDoctor(
+  ID_USER,
+  NOME,
+  CRM,
+  HORA_ENTRADA,
+  HORA_SAIDA,
+  OBSERVACAO
+) {
   const sql =
-    "INSERT INTO `doutor` ( `NOME`, `CRO`, `HORA_ENTRADA`, `HORA_SAIDA`, `OBSERVACAO`) VALUES (?, ?, ?, ?, ?);";
+    "INSERT INTO `doutor` (`ID_USER`, `NOME`, `CRM`, `HORA_ENTRADA`, `HORA_SAIDA`, `OBSERVACAO`) VALUES (?, ?, ?, ?, ?, ?);";
 
-  const doctors = await conect.executeQuery(sql, [
-    NOME,
-    CRO,
-    HORA_ENTRADA,
-    HORA_SAIDA,
-    OBSERVACAO,
-  ]);
+  try {
+    const doctors = await conect.executeQuery(sql, [
+      ID_USER,
+      NOME,
+      CRM,
+      HORA_ENTRADA,
+      HORA_SAIDA,
+      OBSERVACAO,
+    ]);
 
-  const CODIGO = Number(doctors.insertId);
-  return doctors
-    ? { CODIGO, NOME, CRO, HORA_ENTRADA, HORA_SAIDA, OBSERVACAO }
-    : null;
+    try {
+      const CODIGO = Number(doctors.insertId);
+
+      if (Number.isInteger(CODIGO)) {
+        return {
+          CODIGO,
+          ID_USER,
+          NOME,
+          CRM,
+          HORA_ENTRADA,
+          HORA_SAIDA,
+          OBSERVACAO,
+        };
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  } catch (error) {
+    console.error("Erro ao adicionar doutor:", error);
+    return null;
+  }
 }
-
 
 async function editDoctor(id) {
   console.log("ID PASSADO PELA REQUISIÇÂO=>", id);
@@ -62,15 +88,19 @@ async function editDoctor(id) {
 
 async function delDoctor(id) {
   console.log("ID PASSADO PELA REQUISIÇÂO=>", id);
-  const sql = "select * from DOUTOR where CODIGO = ?";
+  const sql = "DELETE FROM DOUTOR where CODIGO = ?";
 
   const doctors = await conect.executeQuery(sql, [id]);
 
   console.log(doctors);
-  if (doctors && doctors.length > 0) {
-    return doctors;
-  } else {
-    return [];
+  try {
+    if (doctors.affectedRows > 0) {
+      return { id };
+    } else {
+      return null;
+    }
+  } catch {
+    return null;
   }
 }
 

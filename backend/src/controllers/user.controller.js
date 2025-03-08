@@ -13,6 +13,7 @@ async function adduser(req, res) {
     // console.log(req.body)
   
     const users = await userService.adduser(req.body);
+    
     if (users != null) {
       return res.status(200).json({"message": "Requisição bem-sucedida!", 'data': users});
     } else {
@@ -22,12 +23,21 @@ async function adduser(req, res) {
 
 async function edituser(req, res) {
   const users = await userService.edituser(req.params.id,req.body);
-  return res.status(200).json({"message":"Requisição bem ucedida!",'data':users});
+  if (users != null) {
+    return res.status(200).json({"message":"Requisição bem ucedida!",'data':users});
+  } else {
+    return res.status(500).json({"message": "Algo deu errado com a edição no banco!", 'data': users});
+  }
+
 }
 
 async function deluser(req, res) {
   const users = await userService.deluser(req.params.id);
-  return res.status(200).json({"message":"Requisição bem ucedida!",'data':users});
+  if (users != null) {
+    return res.status(200).json({"message":"Requisição bem sucedida!",'data':users});
+  } else {
+    return res.status(500).json({"message": "Algo deu errado com a edição no banco!", 'data': users});
+  }
 }
 
 export default { getAlluser, getIduser, adduser, edituser, deluser };

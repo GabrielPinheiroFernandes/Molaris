@@ -10,9 +10,10 @@ async function getIdDoctor(id) {
 }
 async function addDoctor(body) {
   // console.log(body)
-  const { NOME, CRO, HORA_ENTRADA, HORA_SAIDA, OBSERVACAO } = body;
+  const { ID_USER,NOME, CRO, HORA_ENTRADA, HORA_SAIDA, OBSERVACAO } = body;
 
   const doctors = await doctorRepository.addDoctor(
+    ID_USER,
     NOME,
     CRO,
     HORA_ENTRADA,
