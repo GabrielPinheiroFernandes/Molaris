@@ -1,6 +1,5 @@
 import User from "../models/user.js"
 
-// Serviço para obter todos os usuários
 export const getAllUsers = async () => {
   try {
     const users = await User.find();
@@ -10,7 +9,6 @@ export const getAllUsers = async () => {
   }
 };
 
-// Serviço para criar um usuário
 export const createUser = async (name, email, password) => {
   try {
     const newUser = new User({ name, email, password });
@@ -21,7 +19,6 @@ export const createUser = async (name, email, password) => {
   }
 };
 
-// Serviço para deletar um usuário
 export const deleteUser = async (userId) => {
   try {
     const result = await User.findByIdAndDelete(userId);
@@ -34,7 +31,6 @@ export const deleteUser = async (userId) => {
   }
 };
 
-// Serviço para apagar todos os usuários
 export const deleteAllUsers = async () => {
   try {
     const result = await User.deleteMany({});

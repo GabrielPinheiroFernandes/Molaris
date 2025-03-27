@@ -4,22 +4,17 @@ import {
   getAllUsers,
   createUser,
   deleteUser,
-  deleteAllUsers,
   createRandomUser,
 } from "../controllers/user.js";
 
 const router = Router();
 
-// Rota para listar todos os usuários (protegida)
-router.get("/", getAllUsers);
-
-// Rota para criar um usuário (protegida)
+router.get("/", authenticate, getAllUsers);
 router.post("/", authenticate, createUser);
-
-// Rota para deletar um usuário pelo ID (protegida)
 router.delete("/:id", authenticate, deleteUser);
 
-// Rota para criar um usuário com dados aleatórios (sem autenticação necessária)
-router.post("/random", createRandomUser);
+// for testing
+router.post("/random-dev", createRandomUser);
+router.get("/get-all-dev", getAllUsers);
 
 export default router;

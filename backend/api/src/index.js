@@ -11,7 +11,7 @@ const PORT = 3000;
     await connectDB();
     app.use(
       cors({
-        origin: "*", // Aceita requisições de qualquer origem (use com cuidado em produção)
+        origin: "*",
         methods: ["GET", "POST", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
       })

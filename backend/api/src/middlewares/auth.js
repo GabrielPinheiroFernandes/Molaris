@@ -2,10 +2,9 @@ import { verifyToken } from "../services/auth.js";
 
 export const authenticate = (req, res, next) => {
   try {
-    // Obtém o token do cabeçalho da requisição
     const token = req.headers["authorization"]?.split(" ")[1];
 
-    console.log("Token recebido:", token); // Log para depuração
+    console.log("Token recebido:", token);
 
     if (!token) {
       return res.status(403).json({ message: "Token não fornecido" });
@@ -17,7 +16,7 @@ export const authenticate = (req, res, next) => {
       return res.status(401).json({ message: "Token inválido ou expirado" });
     }
 
-    req.userId = decoded.userId; // Anexa o userId ao objeto req
+    req.userId = decoded.userId;
     next();
   } catch (error) {
     console.error("Erro no middleware de autenticação:", error);

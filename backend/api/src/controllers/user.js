@@ -2,7 +2,6 @@ import * as userService from "../services/user.js";
 import * as feedbacks from "../utils/feedbacks.js";
 import faker from "faker";
 
-// Controller para criar um usuário com dados aleatórios usando o faker
 export const createRandomUser = async (req, res) => {
   const randomName = faker.name.findName(); // Nome aleatório
   const randomEmail = faker.internet.email(); // Email aleatório
@@ -23,7 +22,6 @@ export const createRandomUser = async (req, res) => {
   }
 };
 
-// Controller para apagar todos os usuários
 export const deleteAllUsers = async (req, res) => {
   try {
     const result = await userService.deleteAllUsers();
@@ -37,7 +35,6 @@ export const deleteAllUsers = async (req, res) => {
   }
 };
 
-// Controller para obter todos os usuários
 export const getAllUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
@@ -47,7 +44,6 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-// Controller para criar um usuário
 export const createUser = async (req, res) => {
   const { name, email, address, phone } = req.body;
 
@@ -60,7 +56,6 @@ export const createUser = async (req, res) => {
   }
 };
 
-// Controller para deletar um usuário
 export const deleteUser = async (req, res) => {
   const userId = req.params.id;
 

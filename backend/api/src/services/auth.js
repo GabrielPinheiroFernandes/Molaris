@@ -1,36 +1,79 @@
 import jwt from "jsonwebtoken";
+import RefreshToken from "../models/refreshToken.js";
 import User from "../models/user.js";
+import { v4 as uuidv4 } from "uuid";
+import dotenv from "dotenv";
 
-const JWT_SECRET = "e7d4bdb804cd3debe95fa1ba620eed806c192b63bc46efcd137f7c76bedfc516a1c6ce3af490b691644b327fde70030ab10e2ea19052f3c32d1a3fec0945f0c9404053a9e194a3273344e7eb38e693d8e420c969aa73b4810f95635da883722c34cc5584acc457e8642c66cac6dd4571e428cc2dcafe61192e6123a04ac803381d1aef18eca960841037c7745755e80f620de1d9604264bc55991acc653a3e2f8de821d4234831645ebb8684545e9254fbcd6a6253850875fcd0f122de8a3157c59d1e4393f0fec2a8e567534d6084b0e0e291ebeecaa5e5ffe0e901dd391ff15dda676d47be85c93052887e567a953ca37fb719a6407578017617b9ce91aad3";
+dotenv.config();
 
-// Função para gerar o token
-export const generateToken = (userId) => {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1h" });
+const JWT_SECRET = process.env.JWT_SECRET;
+const REFRESH_SECRET = process.env.REFRESH_SECRET;
+
+export const generateAccessToken = (userId) => {
+  const uniqueIdentifier = uuidv4();
+  return jwt.sign({ userId, uniqueIdentifier }, JWT_SECRET, {
+    expiresIn: "1h",
+  });
 };
 
-// Função para validar o login
-export const login = async (email, password) => {
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new Error("Usuário não encontrado");
-  }
+export const generateRefreshToken = async (userId) => {
+  const uniqueIdentifier = uuidv4();
+  const token = jwt.sign({ userId, uniqueIdentifier }, REFRESH_SECRET, {
+    expiresIn: "7d",
+  });
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-  const isMatch = await user.comparePassword(password);
-  if (!isMatch) {
-    throw new Error("Senha incorreta");
-  }
+  await RefreshToken.create({ token, userId, expiresAt });
 
-  // Gerar o token
-  const token = generateToken(user._id);
   return token;
 };
 
-// Função para validar o token
 export const verifyToken = (token) => {
   try {
     return jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    console.error("Erro ao verificar token:", err.message); // Log do erro
+    console.error("Erro ao verificar token:", err.message);
     return null;
+  }
+};
+
+export const verifyRefreshToken = async (token) => {
+  try {
+    const decoded = jwt.verify(token, REFRESH_SECRET);
+
+    const storedToken = await RefreshToken.findOne({ token });
+    if (!storedToken || storedToken.expiresAt < new Date()) {
+      throw new Error("Refresh token inválido ou expirado.");
+    }
+
+    return decoded.userId;
+  } catch (err) {
+    throw new Error("Erro ao validar o refresh token.");
+  }
+};
+
+export const deleteRefreshToken = async (token) => {
+  await RefreshToken.findOneAndDelete({ token });
+};
+
+export const login = async (email, password) => {
+  const user = await User.findOne({ email });
+  if (!user) throw new Error("Usuário não encontrado.");
+
+  const isMatch = await user.comparePassword(password);
+  if (!isMatch) throw new Error("Senha incorreta.");
+
+  const accessToken = generateAccessToken(user._id);
+  const refreshToken = await generateRefreshToken(user._id);
+
+  return { accessToken, refreshToken };
+};
+
+export const getAllRefreshTokens = async () => {
+  try {
+    const refreshTokens = await RefreshToken.find();
+    return refreshTokens;
+  } catch (err) {
+    throw new Error("Erro ao obter os refresh tokens.");
   }
 };
