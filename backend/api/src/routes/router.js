@@ -8,4 +8,9 @@ const router = Router();
 router.use("/users", userRoutes);
 router.use("/auth", authRoutes);
 
+// Rota de teste
+router.use("/ping", (req, res) => {
+    res.status(200).json({ message: "pong" });
+});
+
 export default router;
