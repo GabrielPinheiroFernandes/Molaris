@@ -1,0 +1,1 @@
+somente para lembrar de arruma o docker para que no build ele não passe a node modules para o container, ele entra na backend/api e de o comando npm i 
