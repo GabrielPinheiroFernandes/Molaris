@@ -2,26 +2,32 @@ import * as userService from "../services/user.js";
 import * as feedbacks from "../utils/feedbacks.js";
 import faker from "faker";
 
-// Controller para criar um usuário com dados aleatórios usando o faker
 export const createRandomUser = async (req, res) => {
-  const randomName = faker.name.findName(); // Nome aleatório
-  const randomEmail = faker.internet.email(); // Email aleatório
+  const randomName = faker.person.fullName(); // Novo padrão do faker 7+
+  const randomEmail = faker.internet.email();
   const password = "123456"; // Senha fixa
 
   try {
     const newUser = await userService.createUser(
       randomName,
       randomEmail,
-      password
+      null, // address
+      null, // phone
+      null, // birthDate
+      null, // gender
+      "Cliente", // role padrão para usuários aleatórios
+      null, // profilePicture
+      password // password
     );
-    res
-      .status(201)
-      .json({ message: "Usuário criado com sucesso!", user: newUser });
+
+    res.status(201).json({ message: "Usuário criado com sucesso!", user: newUser });
     feedbacks.created("user");
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Erro ao criar usuário." });
   }
 };
+
 
 // Controller para apagar todos os usuários
 export const deleteAllUsers = async (req, res) => {
@@ -39,7 +45,7 @@ export const deleteAllUsers = async (req, res) => {
 
 // Controller para obter todos os usuários
 export const getAllUsers = async (req, res) => {
-  try {
+  try { 
     const users = await userService.getAllUsers();
     res.json(users);
   } catch (err) {
@@ -49,16 +55,18 @@ export const getAllUsers = async (req, res) => {
 
 // Controller para criar um usuário
 export const createUser = async (req, res) => {
-  const { name, email, address, phone } = req.body;
+  const { fullName, email, phone, address, birthDate, gender, role, profilePicture, password } = req.body;
 
   try {
-    const newUser = await userService.createUser(name, email, address, phone);
+    // Passando todos os dados para o service
+    const newUser = await userService.createUser(fullName, email, address, phone, birthDate, gender, role, profilePicture, password);
     res.status(201).json(newUser);
     feedbacks.created("user");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 // Controller para deletar um usuário
 export const deleteUser = async (req, res) => {
