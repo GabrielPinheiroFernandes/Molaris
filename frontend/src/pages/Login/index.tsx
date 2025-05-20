@@ -37,7 +37,7 @@ export default function Login() {
 						type="password"
 						value={password}
 						onChange={changePasswordInput}
-						name="password"
+					name="password"
 						placeholder="Senha"
 					/>
 				</div>
