@@ -9,16 +9,69 @@ export const getAllUsers = async () => {
   }
 };
 
-export const createUser = async (name, email, password) => {
+export const createUser = async (
+  fullName, email, address, phone, birthDate, gender, role, profilePicture, password, crm, specialty, education, professionStartDate, clinic, schedule
+) => {
   try {
-    const newUser = new User({ name, email, password });
+    // Verificar se o email já existe
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      throw new Error("Email já registrado");
+    }
+
+    // Criar o usuário
+    const newUser = new User({
+      fullName: fullName, // Alterado de "name" para "fullName"
+      email: email,
+      password: password,
+      phone: phone,
+      address: address,
+      birthDate: birthDate,
+      gender: gender,
+      role: role,
+      profilePicture: profilePicture,
+    });
+
+    // Salvar o usuário
     await newUser.save();
-    return newUser;
+
+    // Se for médico, criar também o registro de médico
+    if (role === "Médico") {
+      const newDoctor = new Doctor({
+        userId: newUser._id,
+        crm: crm,
+        specialty: specialty,
+        education: education,
+        professionStartDate: professionStartDate,
+        clinic: clinic,
+        schedule: schedule,
+      });
+
+      await newDoctor.save();
+
+      // Atualizar o user com doctorId
+      newUser.doctorId = newDoctor._id;
+      await newUser.save();
+    }
+
+    // Montar a resposta com dados importantes
+    const response = {
+      user: {
+        _id: newUser._id,
+        fullName: newUser.fullName,
+        email: newUser.email,
+        role: newUser.role,
+        doctorId: newUser.doctorId || null,
+      },
+    };
+
+    return response;
+
   } catch (err) {
+    console.error(err);  // Loga o erro real para debug
     throw new Error("Erro ao criar o usuário.");
   }
 };
-
 export const deleteUser = async (userId) => {
   try {
     const result = await User.findByIdAndDelete(userId);
