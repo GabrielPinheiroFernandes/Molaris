@@ -1,60 +1,101 @@
-import Patient from "../models/Patient.js";
+import User from "../models/user.js"
+import Doctor from "../models/doctor.js";
 
-export const getAllPacients = async () => {
+// Serviço para obter todos os usuários
+export const getAllUsers = async () => {
   try {
-    const pacients = await Patient.find();
-    return pacients;
+    const users = await User.find();
+    return users;
   } catch (err) {
-    throw new Error("Erro ao obter os pacientes.");
+    throw new Error("Erro ao obter os usuários.");
   }
 };
 
-export const createPacient = async (pacientData) => {
+// Serviço para criar um usuário
+export const createUser = async (
+  fullName, email, address, phone, birthDate, gender, role, profilePicture, password, crm, specialty, education, professionStartDate, clinic, schedule
+) => {
   try {
-    const { cpf } = pacientData;
-
-    // Verifica se o CPF já está cadastrado
-    const existingPacient = await Patient.findOne({ cpf });
-    if (existingPacient) {
-      throw new Error("CPF já registrado.");
+    // Verificar se o email já existe
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      throw new Error("Email já registrado");
     }
 
-    const newPacient = new Patient(pacientData);
-    await newPacient.save();
+    // Criar o usuário
+    const newUser = new User({
+      fullName: fullName, // Alterado de "name" para "fullName"
+      email: email,
+      password: password,
+      phone: phone,
+      address: address,
+      birthDate: birthDate,
+      gender: gender,
+      role: role,
+      profilePicture: profilePicture,
+    });
 
-    return {
-      pacient: {
-        _id: newPacient._id,
-        name: newPacient.name,
-        age: newPacient.age,
-        cpf: newPacient.cpf,
-        gender: newPacient.gender,
-        isActive: newPacient.isActive
+    // Salvar o usuário
+    await newUser.save();
+
+    // Se for médico, criar também o registro de médico
+    if (role === "Médico") {
+      const newDoctor = new Doctor({
+        userId: newUser._id,
+        crm: crm,
+        specialty: specialty,
+        education: education,
+        professionStartDate: professionStartDate,
+        clinic: clinic,
+        schedule: schedule,
+      });
+
+      await newDoctor.save();
+
+      // Atualizar o user com doctorId
+      newUser.doctorId = newDoctor._id;
+      await newUser.save();
+    }
+
+    // Montar a resposta com dados importantes
+    const response = {
+      user: {
+        _id: newUser._id,
+        fullName: newUser.fullName,
+        email: newUser.email,
+        role: newUser.role,
+        doctorId: newUser.doctorId || null,
       },
     };
+
+    return response;
+
   } catch (err) {
-    console.error(err);
-    throw new Error("Erro ao criar o paciente.");
+    console.error(err);  // Loga o erro real para debug
+    throw new Error("Erro ao criar o usuário.");
   }
 };
 
-export const deletePacient = async (pacientId) => {
+
+// Serviço para deletar um usuário
+export const deleteUser = async (userId) => {
   try {
-    const result = await Patient.findByIdAndDelete(pacientId);
+    const result = await User.findByIdAndDelete(userId);
     if (!result) {
-      throw new Error("Paciente não encontrado.");
+      throw new Error("Usuário não encontrado.");
     }
     return result;
   } catch (err) {
-    throw new Error("Erro ao deletar o paciente.");
+    throw new Error("Erro ao deletar o usuário.");
   }
 };
 
-export const deleteAllPacients = async () => {
+// Serviço para apagar todos os usuários
+export const deleteAllUsers = async () => {
   try {
-    const result = await Patient.deleteMany({});
+    const result = await User.deleteMany({});
     return result;
   } catch (err) {
-    throw new Error("Erro ao apagar todos os pacientes.");
+    throw new Error("Erro ao apagar todos os usuários.");
   }
 };

@@ -1,0 +1,282 @@
+type: collection.insomnia.rest/5.0
+name: API ROUTES
+meta:
+  id: wrk_a1790a6200cb486c900741abc5934874
+  created: 1750710065916
+  modified: 1750710065916
+collection:
+  - name: /user
+    meta:
+      id: fld_4fc573f73a634caf8c7e3b8d9d3d5968
+      created: 1743983996683
+      modified: 1743983996683
+      sortKey: -1743983996683
+    children:
+      - url: "{{ _.localhostMolaris }}/users/"
+        name: /
+        meta:
+          id: req_5899c8b2b431411c977f5d75cee0c18b
+          created: 1743984008157
+          modified: 1750713451247
+          isPrivate: false
+          sortKey: -1743984008157
+        method: POST
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "fullName": "Gabriel Fernandes",
+              "email": "teste3@hotmail.com",
+              "password": "admin",
+              "phone": "11999998888",
+              "address": {
+                "street": "Rua Exemplo",
+                "number": "123",
+                "neighborhood": "Centro",
+                "city": "São Paulo",
+                "state": "SP",
+                "zip": "01234-567"
+              },
+              "birthDate": "2000-01-15T00:00:00Z",
+              "gender": "Masculino",
+              "role": "Administrador"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/10.3.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODU5YmVkMGFlMjNhZDJkMGU5YmNkMmEiLCJpYXQiOjE3NTA3MTI1MzgsImV4cCI6MTc1MDcxNjEzOH0.a8-4wmZLPN-c07U1vf0rPCzWZCSBUIRg6u5Uhx8T7LE
+          disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.localhostMolaris }}/users/"
+        name: /
+        meta:
+          id: req_62705ab74c734e1d94056489d8daa5fd
+          created: 1745876920879
+          modified: 1750712550445
+          isPrivate: false
+          sortKey: -1745876920879
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/10.3.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODU5YmVkMGFlMjNhZDJkMGU5YmNkMmEiLCJpYXQiOjE3NTA3MTI1MzgsImV4cCI6MTc1MDcxNjEzOH0.a8-4wmZLPN-c07U1vf0rPCzWZCSBUIRg6u5Uhx8T7LE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.localhostMolaris }}/users/random"
+        name: /random
+        meta:
+          id: req_c60862ee8b054bb2946ee9ac03b9749e
+          created: 1750713009761
+          modified: 1750713028023
+          isPrivate: false
+          sortKey: -1750713009761
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.localhostMolaris }}/users/6859c459436c4f4795b7e6a7"
+        name: /:id
+        meta:
+          id: req_04579b80907e49208843860b0f877675
+          created: 1750713490907
+          modified: 1750714182782
+          isPrivate: false
+          sortKey: -1743984008057
+        method: DELETE
+        body:
+          mimeType: application/json
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/10.3.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODU5YmVkMGFlMjNhZDJkMGU5YmNkMmEiLCJpYXQiOjE3NTA3MTI1MzgsImV4cCI6MTc1MDcxNjEzOH0.a8-4wmZLPN-c07U1vf0rPCzWZCSBUIRg6u5Uhx8T7LE
+          disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: /auth
+    meta:
+      id: fld_4146594eb69045ffa45c60c384f62894
+      created: 1745876243515
+      modified: 1745876243515
+      sortKey: -1745876243515
+    children:
+      - url: "{{ _.localhostMolaris }}/auth/login"
+        name: /login
+        meta:
+          id: req_5463a176792044359dbd1f5c5516fe4d
+          created: 1745876245664
+          modified: 1750712334191
+          isPrivate: false
+          sortKey: -1745876245664
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email":"admin@hotmail.com",
+            	"password": "admin"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/10.3.1
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: /pacients
+    meta:
+      id: fld_f2f75b1435df4e35b38289434c93cb94
+      created: 1750712826024
+      modified: 1750712835943
+      sortKey: -1743983996633
+    children:
+      - url: "{{ _.localhostMolaris }}/pacients/6859c458436c4f4795b7e692"
+        name: /:id
+        meta:
+          id: req_e3cd1484df6a48348770f882640acc81
+          created: 1750712826026
+          modified: 1750713662658
+          isPrivate: false
+          sortKey: -1743984008157
+        method: DELETE
+        body:
+          mimeType: application/json
+          text: |
+            {
+              "fullName": "Gabriel Fernandes",
+              "email": "teste2@hotmail.com",
+              "password": "admin",
+              "phone": "11999998888",
+              "address": {
+                "street": "Rua Exemplo",
+                "number": "123",
+                "neighborhood": "Centro",
+                "city": "São Paulo",
+                "state": "SP",
+                "zip": "01234-567"
+              },
+              "birthDate": "2000-01-15T00:00:00Z",
+              "gender": "Masculino",
+              "role": "Administrador"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/10.3.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODU5YmVkMGFlMjNhZDJkMGU5YmNkMmEiLCJpYXQiOjE3NTA3MTI1MzgsImV4cCI6MTc1MDcxNjEzOH0.a8-4wmZLPN-c07U1vf0rPCzWZCSBUIRg6u5Uhx8T7LE
+          disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.localhostMolaris }}/pacients"
+        name: /
+        meta:
+          id: req_20e7a390d5274a258f4bd0aacd299b13
+          created: 1750712826029
+          modified: 1750712899203
+          isPrivate: false
+          sortKey: -1745876920879
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/10.3.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODU5YmVkMGFlMjNhZDJkMGU5YmNkMmEiLCJpYXQiOjE3NTA3MTI1MzgsImV4cCI6MTc1MDcxNjEzOH0.a8-4wmZLPN-c07U1vf0rPCzWZCSBUIRg6u5Uhx8T7LE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.localhostMolaris }}/pacients/random-dev"
+        name: /random-dev
+        meta:
+          id: req_204dda23de8e4ebdba1afe0f6acdb52d
+          created: 1750712893288
+          modified: 1750712893288
+          isPrivate: false
+          sortKey: -1745876583271.5
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/10.3.1
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODU5YmVkMGFlMjNhZDJkMGU5YmNkMmEiLCJpYXQiOjE3NTA3MTI1MzgsImV4cCI6MTc1MDcxNjEzOH0.a8-4wmZLPN-c07U1vf0rPCzWZCSBUIRg6u5Uhx8T7LE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_af9b6def5ef14be791301e90a793694c
+    created: 1743370993150
+    modified: 1743370993150
+environments:
+  name: Base Environment
+  meta:
+    id: env_7b7301151c4f455993bfebab2ae4207d
+    created: 1736317773785
+    modified: 1745876831876
+    isPrivate: false
+  data:
+    localhost: localhost:8080
+    localhostMolaris: localhost:3000
