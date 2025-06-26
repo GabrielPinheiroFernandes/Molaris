@@ -2,14 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cadastro from "./pages/Cadastro";
 import Login from "./pages/Login";
 import PrivateRoute from "./middlewares/PrivateRoute";
+import Main from "./Layouts/Main";
 
 function App() {
-	return(
-	<Router>
+  return (
+    <Router>
       <Routes>
         {/* Rota pública */}
         <Route path="/" element={<Login />} />
-        
 
         {/* Rotas protegidas */}
         {/* <Route
@@ -20,18 +20,17 @@ function App() {
             </PrivateRoute>
           }
         /> */}
-         <Route
-          path="/cadastro"
+        <Route
+          path="/home"
           element={
             <PrivateRoute>
-             <Cadastro />
+              <Main />
             </PrivateRoute>
           }
         />
-    
       </Routes>
     </Router>
-	)
+  );
 }
 
 export default App;
